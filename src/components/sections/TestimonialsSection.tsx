@@ -5,7 +5,6 @@ import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
 import { AnimatePresence, motion } from 'framer-motion';
-import { SectionHeading } from '@/components/common';
 import { testimonials } from '@/data/testimonials';
 
 export const TestimonialsSection = () => {

@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { Box, Button, Container, Stack, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Container, Stack, Typography } from '@mui/material';
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useBookingStore } from '@/store/bookingStore';
 import heroImage from '@/assets/estilista.png';
 import heroVideo from '@/assets/videos/hero-1.mp4';
+import brandLogo from '@/assets/perfec-beauty-logo.png';
 
 type HeroSlide =
   | { type: 'image'; src: string; alt: string; duration: number }
@@ -208,6 +209,41 @@ export const Hero = () => {
                   boxShadow: '0 40px 80px -40px rgba(26,26,26,0.45)',
                 }}
               >
+                <Box
+                  aria-hidden
+                  sx={{
+                    position: 'absolute',
+                    inset: 0,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 2.5,
+                    background:
+                      'radial-gradient(circle at 50% 40%, #FAFAF7 0%, #F5F1EB 60%, #EDE5D8 100%)',
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src={brandLogo}
+                    alt=""
+                    sx={{
+                      width: { xs: 110, sm: 140 },
+                      height: { xs: 110, sm: 140 },
+                      objectFit: 'cover',
+                      borderRadius: '50%',
+                      clipPath: 'circle(46% at 50% 50%)',
+                      filter: 'drop-shadow(0 6px 24px rgba(26,26,26,0.18))',
+                    }}
+                  />
+                  <Box
+                    component={motion.div}
+                    animate={{ opacity: [0.4, 1, 0.4] }}
+                    transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+                  >
+                    <CircularProgress size={22} thickness={3} sx={{ color: 'accent.main' }} />
+                  </Box>
+                </Box>
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={slideIndex}
@@ -313,7 +349,7 @@ export const Hero = () => {
                     </Box>
                     <Box>
                       <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.primary' }}>
-                        Yeni · Colorista
+                        Yeni · DIRECTORA DE PERFECT BEAUTY
                       </Typography>
                       <Typography variant="caption" sx={{ display: 'block' }}>
                         “El balayage que te va a enamorar.”

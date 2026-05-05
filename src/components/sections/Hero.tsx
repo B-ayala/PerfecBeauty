@@ -321,26 +321,27 @@ export const Hero = () => {
                   transition={{ delay: 0.6, duration: 0.6 }}
                   style={{
                     position: 'absolute',
-                    left: 20,
-                    bottom: 20,
-                    right: 20,
+                    left: 16,
+                    bottom: 16,
                   }}
                 >
                   <Box
                     sx={{
                       backgroundColor: 'rgba(255,255,255,0.92)',
                       backdropFilter: 'blur(10px)',
-                      borderRadius: 2.5,
-                      p: 2.5,
-                      display: 'flex',
+                      borderRadius: { xs: 1.5, sm: 2 },
+                      px: { xs: 1, sm: 1.5 },
+                      py: { xs: 0.6, sm: 1 },
+                      display: 'inline-flex',
                       alignItems: 'center',
-                      gap: 2,
+                      gap: { xs: 0.75, sm: 1.25 },
+                      maxWidth: { xs: 200, sm: 260 },
                     }}
                   >
                     <Box
                       sx={{
-                        width: 44,
-                        height: 44,
+                        width: { xs: 24, sm: 32 },
+                        height: { xs: 24, sm: 32 },
                         borderRadius: '50%',
                         backgroundColor: 'accent.main',
                         display: 'grid',
@@ -348,16 +349,33 @@ export const Hero = () => {
                         color: 'primary.main',
                         fontFamily: 'Playfair Display',
                         fontStyle: 'italic',
-                        fontSize: '1.25rem',
+                        fontSize: { xs: '0.75rem', sm: '0.95rem' },
+                        flexShrink: 0,
                       }}
                     >
                       S
                     </Box>
-                    <Box>
-                      <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.primary' }}>
-                        Yeni · DIRECTORA DE PERFECT BEAUTY
+                    <Box sx={{ minWidth: 0 }}>
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          fontWeight: 600,
+                          color: 'text.primary',
+                          display: 'block',
+                          lineHeight: 1.15,
+                          fontSize: { xs: '0.65rem', sm: '0.75rem' },
+                        }}
+                      >
+                        Yeni · DIRECTORA
                       </Typography>
-                      <Typography variant="caption" sx={{ display: 'block' }}>
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          display: 'block',
+                          fontSize: { xs: '0.6rem', sm: '0.7rem' },
+                          lineHeight: 1.2,
+                        }}
+                      >
                         “El balayage que te va a enamorar.”
                       </Typography>
                     </Box>

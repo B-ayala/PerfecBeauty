@@ -22,12 +22,12 @@ const HERO_SLIDES: HeroSlide[] = [
   },
   {
     type: 'video',
-    src: heroVideo,
+    src: perfectBeautyHomeVideo,
     duration: 8000,
   },
   {
     type: 'video',
-    src: perfectBeautyHomeVideo,
+    src: heroVideo,
     duration: 8000,
   },
 ];

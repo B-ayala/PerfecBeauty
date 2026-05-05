@@ -62,6 +62,8 @@ export const FallingLeaves = ({ visible, count = 28 }: FallingLeavesProps) => {
         pointerEvents: 'none',
         overflow: 'hidden',
         zIndex: (t) => t.zIndex.appBar - 1,
+        contain: 'layout paint size',
+        transform: 'translateZ(0)',
       }}
     >
       {leaves.map((leaf) => {
@@ -71,8 +73,7 @@ export const FallingLeaves = ({ visible, count = 28 }: FallingLeavesProps) => {
           left: `${leaf.left}%`,
           fontSize: leaf.size,
           color: leaf.color,
-          filter: `drop-shadow(0 2px 4px ${leaf.color}55)`,
-          willChange: 'transform, opacity',
+          textShadow: `0 2px 4px ${leaf.color}55`,
           userSelect: 'none',
           animation: `leaf-fall ${leaf.duration}s ease-in-out ${leaf.delay}s infinite`,
           ['--leaf-rs']: `${leaf.rotateStart}deg`,

@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useBookingStore } from '@/store/bookingStore';
 import heroImage from '@/assets/estilista.png';
 import heroVideo from '@/assets/videos/hero-1.mp4';
+import perfectBeautyHomeVideo from '@/assets/videos/perfec_beauty-home.mp4';
 import brandLogo from '@/assets/perfec-beauty-logo.png';
 
 type HeroSlide =
@@ -22,6 +23,11 @@ const HERO_SLIDES: HeroSlide[] = [
   {
     type: 'video',
     src: heroVideo,
+    duration: 8000,
+  },
+  {
+    type: 'video',
+    src: perfectBeautyHomeVideo,
     duration: 8000,
   },
 ];

@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode } from 'react';
+import { useRef, useState, type MouseEvent, type ReactNode } from 'react';
 import { Box, Button, type ButtonProps, type SxProps, type Theme } from '@mui/material';
 import { useAutumnStore } from '@/store/autumnStore';
 
@@ -36,20 +36,75 @@ const reserveButtonSx: SxProps<Theme> = {
   },
 };
 
-const MonkeyIcon = ({ size }: { size: number }) => (
+const MonkeyIcon = ({
+  size,
+  onClick,
+}: {
+  size: number;
+  onClick?: (e: MouseEvent<HTMLSpanElement>) => void;
+}) => (
   <Box
     component="span"
     className="autumn-monkey-pulse"
     aria-hidden
+    onClick={onClick}
     sx={{
       fontSize: `${size}px`,
       lineHeight: 1,
       display: 'inline-flex',
       alignItems: 'center',
-      ml: 0.75,
+      cursor: onClick ? 'pointer' : 'inherit',
     }}
   >
     🐵
+  </Box>
+);
+
+const SparkleIcon = ({
+  size,
+  active,
+  onClick,
+}: {
+  size: number;
+  active: boolean;
+  onClick: (e: MouseEvent<HTMLSpanElement>) => void;
+}) => (
+  <Box
+    component="span"
+    aria-label="Descubrí más experiencias"
+    role="button"
+    tabIndex={0}
+    onClick={onClick}
+    onKeyDown={(e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        onClick(e as unknown as MouseEvent<HTMLSpanElement>);
+      }
+    }}
+    sx={{
+      fontSize: `${size}px`,
+      lineHeight: 1,
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      cursor: 'pointer',
+      transition: 'transform 0.25s ease, filter 0.25s ease',
+      filter: active
+        ? 'drop-shadow(0 0 6px rgba(217,147,71,0.7))'
+        : 'drop-shadow(0 1px 2px rgba(140,63,26,0.25))',
+      transform: active ? 'scale(1.08)' : 'scale(1)',
+      '&:hover': {
+        transform: 'scale(1.15) rotate(-8deg)',
+        filter: 'drop-shadow(0 0 8px rgba(217,147,71,0.85))',
+      },
+      '&:focus-visible': {
+        outline: '2px solid rgba(217,147,71,0.7)',
+        outlineOffset: 2,
+        borderRadius: '50%',
+      },
+    }}
+  >
+    ✨
   </Box>
 );
 
@@ -81,7 +136,9 @@ export const ReserveButton = ({
   const [hearts, setHearts] = useState<number[]>([]);
   const heartId = useRef(0);
   const autumnActive = useAutumnStore((s) => s.active);
-  const setHovering = useAutumnStore((s) => s.setHovering);
+  const toggleAutumn = useAutumnStore((s) => s.toggle);
+  const promoVisible = useAutumnStore((s) => s.promoVisible);
+  const togglePromo = useAutumnStore((s) => s.togglePromo);
 
   const handleClick = () => {
     if (showHearts) {
@@ -94,22 +151,40 @@ export const ReserveButton = ({
     onClick();
   };
 
+  const handleMonkeyClick = (e: MouseEvent<HTMLSpanElement>) => {
+    e.stopPropagation();
+    const rect = e.currentTarget.getBoundingClientRect();
+    toggleAutumn({
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2,
+    });
+  };
+
+  const handleSparkleClick = (e: MouseEvent<HTMLSpanElement>) => {
+    e.stopPropagation();
+    togglePromo();
+  };
+
   return (
-    <Button
-      className={`autumn-trigger ${autumnActive ? 'is-autumn' : ''}`}
-      variant="contained"
-      color="primary"
-      size={size}
-      onMouseEnter={() => setHovering(true)}
-      onMouseLeave={() => setHovering(false)}
-      onFocus={() => setHovering(true)}
-      onBlur={() => setHovering(false)}
-      onClick={handleClick}
-      sx={[reserveButtonSx, ...(Array.isArray(sx) ? sx : [sx])]}
+    <Box
+      sx={[
+        { display: 'inline-flex', alignItems: 'center', gap: 1 },
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
     >
-      {label}
-      <MonkeyIcon size={monkeySize} />
-      {showHearts && hearts.map((id) => <FloatingHeart key={id}>🤎</FloatingHeart>)}
-    </Button>
+      <Button
+        className={`autumn-trigger ${autumnActive ? 'is-autumn' : ''}`}
+        variant="contained"
+        color="primary"
+        size={size}
+        onClick={handleClick}
+        sx={reserveButtonSx}
+      >
+        {label}
+        {showHearts && hearts.map((id) => <FloatingHeart key={id}>🤎</FloatingHeart>)}
+      </Button>
+      <MonkeyIcon size={monkeySize} onClick={handleMonkeyClick} />
+      <SparkleIcon size={monkeySize} active={promoVisible} onClick={handleSparkleClick} />
+    </Box>
   );
 };
